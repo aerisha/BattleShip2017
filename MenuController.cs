@@ -32,7 +32,7 @@ static class MenuController
 		new string[] {
 			"RETURN",
 			"SURRENDER",
-			"RESTART",
+			"RESTART", //Kevin WONG changes/Additions
 			"QUIT"
 		},
 		new string[] {
@@ -202,7 +202,7 @@ static class MenuController
 		//SwinGame.DrawText("Settings", Color.White, GameFont("ArialLarge"), 50, 50)
 
 		DrawButtons(MAIN_MENU);
-		DrawButtons(SETUP_MENU, 1, 1);
+		DrawButtons(SETUP_MENU, 1, 1); //kevin wong : enlarge font size 
 	}
 
 	/// <summary>
@@ -404,7 +404,7 @@ static class MenuController
 				break;
 			case GAME_MENU_RESTART_BUTTON:
 				GameController.StartGame();
-				break;
+				break; //kevin wong changes / added
 			case GAME_MENU_QUIT_BUTTON:
 				GameController.AddNewState(GameState.Quitting);
 				break;
