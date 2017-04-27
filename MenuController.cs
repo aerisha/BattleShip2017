@@ -26,7 +26,7 @@ static class MenuController
 			"PLAY",
 			"SETUP",
 			"SCORES",
-			"HELP",
+			"INSTRUCTIONS", //Boon changes/Additions
 			"QUIT"
 		},
 		new string[] {
@@ -49,8 +49,8 @@ static class MenuController
 	private const int MENU_TOP = 575;
 	private const int MENU_LEFT = 30;
 	private const int MENU_GAP = 0;
-	private const int BUTTON_WIDTH = 90;
-	private const int BUTTON_HEIGHT = 15;
+	private const int BUTTON_WIDTH = 120;
+	private const int BUTTON_HEIGHT = 20;
 	private const int BUTTON_SEP = BUTTON_WIDTH + MENU_GAP;
 
 	private const int TEXT_OFFSET = 0;
@@ -65,7 +65,8 @@ static class MenuController
 	private const int MAIN_MENU_PLAY_BUTTON = 0;
 	private const int MAIN_MENU_SETUP_BUTTON = 1;
 	private const int MAIN_MENU_TOP_SCORES_BUTTON = 2;
-	private const int MAIN_MENU_INSTRUCT = 3;
+	private const int MAIN_MENU_HELP = 3; //Boon changes/Additions
+
 
 	private const int MAIN_MENU_QUIT_BUTTON = 4;
 	private const int SETUP_MENU_EASY_BUTTON = 0;
@@ -332,9 +333,9 @@ static class MenuController
 			case MAIN_MENU_TOP_SCORES_BUTTON:
 				GameController.AddNewState(GameState.ViewingHighScores);
 				break;
-			case MAIN_MENU_INSTRUCT:
-				GameController.AddNewState(GameState.ViewingInstructMenu);
-			if (GameController.CurrentState == GameState.ViewingInstructMenu)
+			case MAIN_MENU_HELP:											//Boon: Added Help control
+				GameController.AddNewState(GameState.ViewingHelp);
+			if (GameController.CurrentState == GameState.ViewingHelp)
 			{
 				current_page = "Current Page";
 			}

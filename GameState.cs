@@ -3,7 +3,6 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 /// <summary>
 /// The GameStates represent the state of the Battleships game play.
@@ -27,6 +26,11 @@ public enum GameState
 	/// The player is looking at the high scores
 	/// </summary>
 	ViewingHighScores,
+
+	/// <summary>
+	/// The player is viewing the instructions
+	/// </summary>
+	ViewingHelp,
 
 	/// <summary>
 	/// The player is altering the game settings

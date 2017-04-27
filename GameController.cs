@@ -17,7 +17,7 @@ public static class GameController
 
 	private static BattleShipsGame _theGame;
 	private static Player _human;
-    private static bool _mute = false;
+    private static bool _mute = false; //added mute function
 	private static AIPlayer _ai;
 
 	private static Stack<GameState> _state = new Stack<GameState>();
@@ -312,7 +312,7 @@ public static class GameController
 			case GameState.ViewingHighScores:
 				HighScoreController.HandleHighScoreInput();
 				break;
-			case GameState.ViewingInstructMenu:
+			case GameState.ViewingHelp:
 				Instructions.HandleInstructInput();
 				break;
 		}
@@ -354,7 +354,7 @@ public static class GameController
 			case GameState.ViewingHighScores:
 				HighScoreController.DrawHighScores();
 				break;
-			case GameState.ViewingInstructMenu:
+			case GameState.ViewingHelp:
 				Instructions.DrawInstruct();
 				break;
 		}
