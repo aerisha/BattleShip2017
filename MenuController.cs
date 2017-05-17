@@ -26,49 +26,52 @@ static class MenuController
 			"PLAY",
 			"SETUP",
 			"SCORES",
-			"INSTRUCTIONS", //Boon changes/Additions
+			"HELP",
 			"QUIT"
 		},
 		new string[] {
 			"RETURN",
-			"SURRENDER",
-			"RESTART", //Kevin WONG changes/Additions
-			"QUIT"
+			"SURREND",
+			"RESTART",
+			"QUIT",
+			"SAVE"
 		},
 		new string[] {
 			"EASY",
 			"MEDIUM",
 			"HARD"
 		},
-		new string[] { //Aerisha Changes/Additions
-			"GIVE UP",
-			"QUIT"
+		new string[] {
+			"PLAY",
+			"SETUP",
+			"SCORES",
+			"HELP",
+			"QUIT",
+			"RESUME"
 		}
 
 	};
 	private const int MENU_TOP = 575;
 	private const int MENU_LEFT = 30;
 	private const int MENU_GAP = 0;
-	private const int BUTTON_WIDTH = 120;
-	private const int BUTTON_HEIGHT = 20;
+	private const int BUTTON_WIDTH = 75;
+	private const int BUTTON_HEIGHT = 15;
 	private const int BUTTON_SEP = BUTTON_WIDTH + MENU_GAP;
 
 	private const int TEXT_OFFSET = 0;
 	private const int MAIN_MENU = 0;
+	private const int MAIN_MENU_2 = 3;
 	private const int GAME_MENU = 1;
+
 	private const int SETUP_MENU = 2;
-
-	private const int COMMON_MENU = 3; //Aerisha Changes/Additions
-	private const int COMMON_MENU_GP_BUTTON = 0; //Aerisha Changes/Additions
-	private const int COMMON_MENU_QUIT_BUTTON = 1; //Aerisha Changes/Additions
-
 	private const int MAIN_MENU_PLAY_BUTTON = 0;
 	private const int MAIN_MENU_SETUP_BUTTON = 1;
 	private const int MAIN_MENU_TOP_SCORES_BUTTON = 2;
-	private const int MAIN_MENU_HELP = 3; //Boon changes/Additions
-
-
+	private const int MAIN_MENU_INSTRUCT = 3;
 	private const int MAIN_MENU_QUIT_BUTTON = 4;
+	private const int MAIN_MENU_CONT_BUTTON = 5;
+
+
 	private const int SETUP_MENU_EASY_BUTTON = 0;
 	private const int SETUP_MENU_MEDIUM_BUTTON = 1;
 	private const int SETUP_MENU_HARD_BUTTON = 2;
@@ -78,6 +81,7 @@ static class MenuController
 	private const int GAME_MENU_RETURN_BUTTON = 0;
 	private const int GAME_MENU_SURRENDER_BUTTON = 1;
 	private const int GAME_MENU_RESTART_BUTTON = 2;
+	private const int GAME_MENU_PAUSE_BUTTON = 4;
 
 	private const int GAME_MENU_QUIT_BUTTON = 3;
 	private static readonly Color MENU_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
@@ -90,17 +94,13 @@ static class MenuController
 	/// Handles the processing of user input when the main menu is showing
 	/// </summary>
 	public static void HandleMainMenuInput()
-	{
-		HandleMenuInput(MAIN_MENU, 0, 0);
-	}
+	{	
+		if (GameController.CurrentStateHasPausedGame) {
+			HandleMenuInput (MAIN_MENU_2, 0, 0);
+		} else {
+			HandleMenuInput (MAIN_MENU, 0, 0);
+		}
 
-	/// <summary>
-	/// Handles the processing of user input when the common menu is showing
-	/// Aerisha Changes/Additions
-	/// </summary>
-	public static void HandleCommonMenuInput ()
-	{
-		HandleMenuInput (COMMON_MENU, 0, 0);
 	}
 
 	/// <summary>
@@ -167,8 +167,11 @@ static class MenuController
 	{
 		//Clears the Screen to Black
 		//SwinGame.DrawText("Main Menu", Color.White, GameFont("ArialLarge"), 50, 50)
-
-		DrawButtons(MAIN_MENU);
+		if (GameController.CurrentStateHasPausedGame) {
+			DrawButtons (MAIN_MENU_2);
+		} else {
+			DrawButtons (MAIN_MENU);
+		}
 	}
 
 	/// <summary>
@@ -183,15 +186,6 @@ static class MenuController
 	}
 
 	/// <summary>
-	/// Draws the Common menu to the screen
-	/// Aerisha Changes/Additions
-	/// </summary>
-	public static void DrawCommonMenu ()
-	{
-		DrawButtons (COMMON_MENU);
-	}
-
-	/// <summary>
 	/// Draws the settings menu to the screen.
 	/// </summary>
 	/// <remarks>
@@ -203,7 +197,7 @@ static class MenuController
 		//SwinGame.DrawText("Settings", Color.White, GameFont("ArialLarge"), 50, 50)
 
 		DrawButtons(MAIN_MENU);
-		DrawButtons(SETUP_MENU, 1, 1); //kevin wong : enlarge font size 
+		DrawButtons(SETUP_MENU, 1, 1);
 	}
 
 	/// <summary>
@@ -278,38 +272,17 @@ static class MenuController
 	{
 		switch (menu) {
 			case MAIN_MENU:
-				PerformMainMenuAction(button);
-				break;
+			PerformMainMenuAction (button);
+			break;
+			case MAIN_MENU_2:
+			PerformMainMenuAction (button);
+			break;
 			case SETUP_MENU:
 				PerformSetupMenuAction(button);
 				break;
 			case GAME_MENU:
 				PerformGameMenuAction(button);
 				break;
-			case COMMON_MENU: 					//Aerisha Changes/Additions
-				PerformCommonMenuAction (button);
-			break;
-		}
-	}
-
-	/// <summary>
-	/// The common menu was clicked, perform the button's action.
-	/// Aerisha Changes/Additions
-	/// </summary>
-	/// <param name="button">the button pressed</param>
-	public static void PerformCommonMenuAction (int button)
-	{
-		switch (button) {
-			case COMMON_MENU_GP_BUTTON:
-			GameController.AddNewState(GameState.ViewingGameMenu);
-			if (GameController.CurrentState == GameState.ViewingGameMenu)
-			{
-				current_page = "Current Page";
-			}
-			break;
-			case COMMON_MENU_QUIT_BUTTON:
-			GameController.EndCurrentState ();
-			break;
 		}
 	}
 
@@ -319,6 +292,7 @@ static class MenuController
 	/// <param name="button">the button pressed</param>
 	public static void PerformMainMenuAction(int button)
 	{
+		Console.WriteLine (button);
 		switch (button) {
 			case MAIN_MENU_PLAY_BUTTON:
 				GameController.StartGame();
@@ -333,9 +307,9 @@ static class MenuController
 			case MAIN_MENU_TOP_SCORES_BUTTON:
 				GameController.AddNewState(GameState.ViewingHighScores);
 				break;
-			case MAIN_MENU_HELP:											//Boon: Added Help control
-				GameController.AddNewState(GameState.ViewingHelp);
-			if (GameController.CurrentState == GameState.ViewingHelp)
+			case MAIN_MENU_INSTRUCT:
+				GameController.AddNewState(GameState.ViewingInstructMenu);
+			if (GameController.CurrentState == GameState.ViewingInstructMenu)
 			{
 				current_page = "Current Page";
 			}
@@ -343,6 +317,10 @@ static class MenuController
 			case MAIN_MENU_QUIT_BUTTON:
 				GameController.EndCurrentState();
 				break;
+
+			case MAIN_MENU_CONT_BUTTON:
+				GameController.SwitchState(GameState.Discovering);
+			break;
 		}
 	}
 
@@ -405,10 +383,13 @@ static class MenuController
 				break;
 			case GAME_MENU_RESTART_BUTTON:
 				GameController.StartGame();
-				break; //kevin wong changes / added
+				break;
 			case GAME_MENU_QUIT_BUTTON:
 				GameController.AddNewState(GameState.Quitting);
 				break;
+			case GAME_MENU_PAUSE_BUTTON:
+			GameController.AddNewState (GameState.ViewingMainMenu);
+			break;
 		}
 	}
 }
