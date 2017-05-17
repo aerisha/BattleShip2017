@@ -17,7 +17,7 @@ public static class GameController
 
 	private static BattleShipsGame _theGame;
 	private static Player _human;
-    private static bool _mute = false; //added mute function
+    private static bool _mute = false;
 	private static AIPlayer _ai;
 
 	private static Stack<GameState> _state = new Stack<GameState>();
@@ -31,6 +31,15 @@ public static class GameController
 	/// <returns>The current state</returns>
 	public static GameState CurrentState {
 		get { return _state.Peek(); }
+	}
+
+	/// <summary>
+	/// Returns the wether the  current state of the game has a paused discovery state or not
+	/// </summary>
+	/// <value>The discovering state</value>
+	/// <returns>The discvoering state</returns>
+	public static bool CurrentStateHasPausedGame{
+		get { return _state.Contains (GameState.Discovering); }
 	}
 
 	/// <summary>
@@ -300,11 +309,9 @@ public static class GameController
 				break;
 			case GameState.Deploying:
 				DeploymentController.HandleDeploymentInput();
-				MenuController.HandleCommonMenuInput (); //Aerisha Changes/Additions
 				break;
 			case GameState.Discovering:
 				DiscoveryController.HandleDiscoveryInput();
-				MenuController.HandleCommonMenuInput (); //Aerisha Changes/Additions
 				break;
 			case GameState.EndingGame:
 				EndingGameController.HandleEndOfGameInput();
@@ -312,7 +319,7 @@ public static class GameController
 			case GameState.ViewingHighScores:
 				HighScoreController.HandleHighScoreInput();
 				break;
-			case GameState.ViewingHelp:
+			case GameState.ViewingInstructMenu:
 				Instructions.HandleInstructInput();
 				break;
 		}
@@ -342,11 +349,9 @@ public static class GameController
 				break;
 			case GameState.Deploying:
 				DeploymentController.DrawDeployment();
-				MenuController.DrawCommonMenu (); // Aerisha Changes/Additions
 				break;
 			case GameState.Discovering:
 				DiscoveryController.DrawDiscovery();
-				MenuController.DrawCommonMenu (); // Aerisha Changes/Additions
 				break;
 			case GameState.EndingGame:
 				EndingGameController.DrawEndOfGame();
@@ -354,7 +359,7 @@ public static class GameController
 			case GameState.ViewingHighScores:
 				HighScoreController.DrawHighScores();
 				break;
-			case GameState.ViewingHelp:
+			case GameState.ViewingInstructMenu:
 				Instructions.DrawInstruct();
 				break;
 		}
