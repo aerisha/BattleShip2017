@@ -22,13 +22,6 @@ static class GameLogic
 
 		//Game Loop
 		do {
-			//full screen toggle
-			if (SwinGame.KeyDown (KeyCode.vk_LALT) && SwinGame.KeyTyped (KeyCode.vk_RETURN) || SwinGame.KeyDown(KeyCode.vk_RALT) && SwinGame.KeyTyped(KeyCode.vk_RETURN)) {
-				SwinGame.ToggleFullScreen ();
-			} 
-			};
-		
-
 			GameController.HandleUserInput();
 			GameController.DrawScreen();
 		} while (!(SwinGame.WindowCloseRequested() == true | GameController.CurrentState == GameState.Quitting));

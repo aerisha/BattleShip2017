@@ -26,51 +26,67 @@ static class MenuController
 			"PLAY",
 			"SETUP",
 			"SCORES",
-			"HELP",
+			"INSTRUCTIONS", //Boon changes/Additions
 			"QUIT"
 		},
 		new string[] {
 			"RETURN",
-			"SURREND",
-			"RESTART",
+			"SURRENDER",
+			"RESTART", //Kevin WONG changes/Additions
 			"QUIT",
-			"SAVE"
+			"SAVE"	//Boon changes/Additions
 		},
 		new string[] {
 			"EASY",
 			"MEDIUM",
 			"HARD"
 		},
-		new string[] {
-			"PLAY",
-			"SETUP",
-			"SCORES",
-			"HELP",
-			"QUIT",
-			"RESUME"
-		}
+		new string[] { //Aerisha Changes/Additions
+			"GIVE UP",
+			"QUIT"
+		},
+		new string[] { //Aerisha Changes/Additions
+			"MAIN MENU",
+			"EXIT"
+		},
+		//new string[] {
+			//"PLAY",
+			//"SETUP",
+			//"SCORES",
+			//"HELP",
+			//"QUIT",
+			//"RESUME"
+		//}
 
 	};
 	private const int MENU_TOP = 575;
 	private const int MENU_LEFT = 30;
 	private const int MENU_GAP = 0;
-	private const int BUTTON_WIDTH = 75;
-	private const int BUTTON_HEIGHT = 15;
+	private const int BUTTON_WIDTH = 120;
+	private const int BUTTON_HEIGHT = 30;
 	private const int BUTTON_SEP = BUTTON_WIDTH + MENU_GAP;
 
 	private const int TEXT_OFFSET = 0;
 	private const int MAIN_MENU = 0;
-	private const int MAIN_MENU_2 = 3;
+	//private const int MAIN_MENU_2 = 3;
 	private const int GAME_MENU = 1;
-
 	private const int SETUP_MENU = 2;
+
+	private const int COMMON_MENU = 3; //Aerisha Changes/Additions
+	private const int SCORES_PAGE = 4; //Aerisha Changes/Additions
+
+	private const int COMMON_MENU_GP_BUTTON = 0; //Aerisha Changes/Additions
+	private const int COMMON_MENU_QUIT_BUTTON = 1; //Aerisha Changes/Additions
+
+	private const int SCORES_PAGE_MAINMENU_BUTTON = 0; //Aerisha Changes/Additions
+	private const int SCORES_PAGE_EXIT_BUTTON = 1; //Aerisha Changes/Additions
+
 	private const int MAIN_MENU_PLAY_BUTTON = 0;
 	private const int MAIN_MENU_SETUP_BUTTON = 1;
 	private const int MAIN_MENU_TOP_SCORES_BUTTON = 2;
-	private const int MAIN_MENU_INSTRUCT = 3;
+	private const int MAIN_MENU_INSTRUCT = 3;	//Boon changes/Addition
 	private const int MAIN_MENU_QUIT_BUTTON = 4;
-	private const int MAIN_MENU_CONT_BUTTON = 5;
-
+	//private const int MAIN_MENU_CONT_BUTTON = 5;
 
 	private const int SETUP_MENU_EASY_BUTTON = 0;
 	private const int SETUP_MENU_MEDIUM_BUTTON = 1;
@@ -81,9 +97,9 @@ static class MenuController
 	private const int GAME_MENU_RETURN_BUTTON = 0;
 	private const int GAME_MENU_SURRENDER_BUTTON = 1;
 	private const int GAME_MENU_RESTART_BUTTON = 2;
-	private const int GAME_MENU_PAUSE_BUTTON = 4;
-
 	private const int GAME_MENU_QUIT_BUTTON = 3;
+	private const int GAME_MENU_SAVE_BUTTON = 4;	//Boon changes/Addition
+
 	private static readonly Color MENU_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
 
 	private static readonly Color HIGHLIGHT_COLOR = SwinGame.RGBAColor(1, 57, 86, 255);
@@ -95,14 +111,30 @@ static class MenuController
 	/// </summary>
 	public static void HandleMainMenuInput()
 	{	
-		if (GameController.CurrentStateHasPausedGame) {
-			HandleMenuInput (MAIN_MENU_2, 0, 0);
-		} else {
+		//if (GameController.CurrentStateHasPausedGame) {
+			//HandleMenuInput (MAIN_MENU_2, 0, 0);
+		//} else {
 			HandleMenuInput (MAIN_MENU, 0, 0);
-		}
-
+		//
 	}
 
+	/// <summary>
+	/// Handles the processing of user input when the common menu is showing
+	/// Aerisha Changes/Additions
+	/// </summary>
+	public static void HandleCommonMenuInput ()
+	{
+		HandleMenuInput (COMMON_MENU, 0, 0);
+	}
+
+	/// <summary>
+	/// Handles the processing of user input when the SCORES PAGE menu is showing
+	/// Aerisha Changes/Additions
+	/// </summary>
+	public static void HandleScoresPageInput ()
+	{
+		HandleMenuInput (SCORES_PAGE, 0, 0);
+	}
 	/// <summary>
 	/// Handles the processing of user input when the main menu is showing
 	/// </summary>
@@ -167,11 +199,11 @@ static class MenuController
 	{
 		//Clears the Screen to Black
 		//SwinGame.DrawText("Main Menu", Color.White, GameFont("ArialLarge"), 50, 50)
-		if (GameController.CurrentStateHasPausedGame) {
-			DrawButtons (MAIN_MENU_2);
-		} else {
+		//if (GameController.CurrentStateHasPausedGame) {
+			//DrawButtons (MAIN_MENU_2);
+		//} else {
 			DrawButtons (MAIN_MENU);
-		}
+		//}
 	}
 
 	/// <summary>
@@ -186,6 +218,24 @@ static class MenuController
 	}
 
 	/// <summary>
+	/// Draws the Common menu to the screen
+	/// Aerisha Changes/Additions
+	/// </summary>
+	public static void DrawCommonMenu ()
+	{
+		DrawButtons (COMMON_MENU);
+	}
+
+	/// <summary>
+	/// Draws the Scores Page menu to the screen
+	/// Aerisha Changes/Additions
+	/// </summary>
+	public static void DrawScoresPage ()
+	{
+		DrawButtons (SCORES_PAGE);
+	}
+
+	/// <summary>
 	/// Draws the settings menu to the screen.
 	/// </summary>
 	/// <remarks>
@@ -197,7 +247,7 @@ static class MenuController
 		//SwinGame.DrawText("Settings", Color.White, GameFont("ArialLarge"), 50, 50)
 
 		DrawButtons(MAIN_MENU);
-		DrawButtons(SETUP_MENU, 1, 1);
+		DrawButtons(SETUP_MENU, 1, 1);	//kevin wong : enlarge font size 
 	}
 
 	/// <summary>
@@ -272,17 +322,62 @@ static class MenuController
 	{
 		switch (menu) {
 			case MAIN_MENU:
-			PerformMainMenuAction (button);
-			break;
-			case MAIN_MENU_2:
-			PerformMainMenuAction (button);
-			break;
+				PerformMainMenuAction (button);
+				break;
 			case SETUP_MENU:
 				PerformSetupMenuAction(button);
 				break;
 			case GAME_MENU:
 				PerformGameMenuAction(button);
 				break;
+			case COMMON_MENU: 					//Aerisha Changes/Additions
+				PerformCommonMenuAction (button);
+			break;
+			case SCORES_PAGE:
+				PerformScoresPageMenuAction (button);
+			break;
+		}
+	}
+
+	/// <summary>
+	/// The common menu was clicked, perform the button's action.
+	/// Aerisha Changes/Additions
+	/// </summary>
+	/// <param name="button">the button pressed</param>
+	public static void PerformCommonMenuAction (int button)
+	{
+		switch (button) {
+		case COMMON_MENU_GP_BUTTON:
+			GameController.AddNewState(GameState.ViewingGameMenu);
+			if (GameController.CurrentState == GameState.ViewingGameMenu)
+			{
+				current_page = "Current Page";
+			}
+			break;
+		case COMMON_MENU_QUIT_BUTTON:
+			GameController.AddNewState(GameState.Quitting);
+			break;
+		}
+	}
+
+	/// <summary>
+	/// The common menu was clicked, perform the button's action.
+	/// Aerisha Changes/Additions
+	/// </summary>
+	/// <param name="button">the button pressed</param>
+	public static void PerformScoresPageMenuAction (int button)
+	{
+		switch (button) {
+		case SCORES_PAGE_MAINMENU_BUTTON:
+			GameController.AddNewState(GameState.ViewingMainMenu);
+			if (GameController.CurrentState == GameState.ViewingMainMenu)
+			{
+				current_page = "Current Page";
+			}
+			break;
+		case SCORES_PAGE_EXIT_BUTTON:
+			GameController.AddNewState(GameState.Quitting);
+			break;
 		}
 	}
 
@@ -292,7 +387,6 @@ static class MenuController
 	/// <param name="button">the button pressed</param>
 	public static void PerformMainMenuAction(int button)
 	{
-		Console.WriteLine (button);
 		switch (button) {
 			case MAIN_MENU_PLAY_BUTTON:
 				GameController.StartGame();
@@ -318,9 +412,9 @@ static class MenuController
 				GameController.EndCurrentState();
 				break;
 
-			case MAIN_MENU_CONT_BUTTON:
-				GameController.SwitchState(GameState.Discovering);
-			break;
+			//case MAIN_MENU_CONT_BUTTON:
+				//GameController.SwitchState(GameState.Discovering);
+			//break;
 		}
 	}
 
@@ -387,7 +481,7 @@ static class MenuController
 			case GAME_MENU_QUIT_BUTTON:
 				GameController.AddNewState(GameState.Quitting);
 				break;
-			case GAME_MENU_PAUSE_BUTTON:
+		case GAME_MENU_SAVE_BUTTON:	//Boon Changes/Additions
 			GameController.AddNewState (GameState.ViewingMainMenu);
 			break;
 		}

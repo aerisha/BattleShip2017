@@ -28,9 +28,9 @@ public enum GameState
 	ViewingHighScores,
 
 	/// <summary>
-	/// The player is viewing the instructions
+	/// The player is looking at the instructions
 	/// </summary>
-	ViewingHelp,
+	ViewingInstructMenu,
 
 	/// <summary>
 	/// The player is altering the game settings

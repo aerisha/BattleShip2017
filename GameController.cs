@@ -309,15 +309,18 @@ public static class GameController
 				break;
 			case GameState.Deploying:
 				DeploymentController.HandleDeploymentInput();
+				MenuController.HandleCommonMenuInput (); //Aerisha Changes/Additions
 				break;
 			case GameState.Discovering:
 				DiscoveryController.HandleDiscoveryInput();
+				MenuController.HandleCommonMenuInput (); //Aerisha Changes/Additions
 				break;
 			case GameState.EndingGame:
 				EndingGameController.HandleEndOfGameInput();
 				break;
 			case GameState.ViewingHighScores:
-				HighScoreController.HandleHighScoreInput();
+				HighScoreController.HandleHighScoreInput ();
+				MenuController.HandleScoresPageInput ();	//Aerisha Changes/Additions
 				break;
 			case GameState.ViewingInstructMenu:
 				Instructions.HandleInstructInput();
@@ -349,15 +352,18 @@ public static class GameController
 				break;
 			case GameState.Deploying:
 				DeploymentController.DrawDeployment();
+				MenuController.DrawCommonMenu (); // Aerisha Changes/Additions
 				break;
 			case GameState.Discovering:
 				DiscoveryController.DrawDiscovery();
+				MenuController.DrawCommonMenu (); // Aerisha Changes/Additions
 				break;
 			case GameState.EndingGame:
 				EndingGameController.DrawEndOfGame();
 				break;
 			case GameState.ViewingHighScores:
-				HighScoreController.DrawHighScores();
+				HighScoreController.DrawHighScores ();
+				MenuController.DrawScoresPage ();	// Aerisha Changes/Additions
 				break;
 			case GameState.ViewingInstructMenu:
 				Instructions.DrawInstruct();

@@ -3,19 +3,34 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 using SwinGameSDK;
 
 public static class GameResources
 {
 
+	private static Dictionary<string, Bitmap> _Images = new Dictionary<string, Bitmap>();
+	private static Dictionary<string, Font> _Fonts = new Dictionary<string, Font>();
+	private static Dictionary<string, SoundEffect> _Sounds = new Dictionary<string, SoundEffect>();
+
+	private static Dictionary<string, Music> _Music = new Dictionary<string, Music>();
+	private static Bitmap _Background;
+	private static Bitmap _Animation;
+	private static Bitmap _LoaderFull;
+	private static Bitmap _LoaderEmpty;
+	private static Font _LoadingFont;
+
+	private static SoundEffect _StartSound;
+
 	private static void LoadFonts()
 	{
 		NewFont("ArialLarge", "arial.ttf", 80);
 		NewFont("Courier", "cour.ttf", 14);
 		NewFont("CourierSmall", "cour.ttf", 8);
-		NewFont("Menu", "ffaccess.ttf", 8);
+		//Size was increased from 8 to 10
+		NewFont("Menu", "ffaccess.ttf", 10);
+		//New font with individual style
+		NewFont("Score", "cour.ttf", 14);
 	}
 
 	private static void LoadImages()
@@ -69,7 +84,7 @@ public static class GameResources
 
 	public static Font GameFont(string font)
 	{
-		return _Fonts(font);
+		return _Fonts[font];
 	}
 
 	/// <summary>
@@ -80,7 +95,7 @@ public static class GameResources
 
 	public static Bitmap GameImage(string image)
 	{
-		return _Images(image);
+		return _Images[image];
 	}
 
 	/// <summary>
@@ -91,7 +106,7 @@ public static class GameResources
 
 	public static SoundEffect GameSound(string sound)
 	{
-		return _Sounds(sound);
+		return _Sounds[sound];
 	}
 
 	/// <summary>
@@ -102,21 +117,9 @@ public static class GameResources
 
 	public static Music GameMusic(string music)
 	{
-		return _Music(music);
+		return _Music[music];
 	}
 
-	private static Dictionary<string, Bitmap> _Images = new Dictionary<string, Bitmap>();
-	private static Dictionary<string, Font> _Fonts = new Dictionary<string, Font>();
-	private static Dictionary<string, SoundEffect> _Sounds = new Dictionary<string, SoundEffect>();
-
-	private static Dictionary<string, Music> _Music = new Dictionary<string, Music>();
-	private static Bitmap _Background;
-	private static Bitmap _Animation;
-	private static Bitmap _LoaderFull;
-	private static Bitmap _LoaderEmpty;
-	private static Font _LoadingFont;
-
-	private static SoundEffect _StartSound;
 	/// <summary>
 	/// The Resources Class stores all of the Games Media Resources, such as Images, Fonts
 	/// Sounds, Music.
@@ -267,32 +270,31 @@ public static class GameResources
 
 	private static void FreeFonts()
 	{
-		Font obj = default(Font);
-		foreach ( obj in _Fonts.Values) {
+		foreach (Font obj in _Fonts.Values) {
 			SwinGame.FreeFont(obj);
 		}
 	}
 
 	private static void FreeImages()
 	{
-		Bitmap obj = default(Bitmap);
-		foreach ( obj in _Images.Values) {
+		//Bitmap obj = default(Bitmap);
+		foreach (Bitmap obj in _Images.Values) {
 			SwinGame.FreeBitmap(obj);
 		}
 	}
 
 	private static void FreeSounds()
 	{
-		SoundEffect obj = default(SoundEffect);
-		foreach ( obj in _Sounds.Values) {
+		//SoundEffect obj = default(SoundEffect);
+		foreach (SoundEffect obj in _Sounds.Values) {
 			Audio.FreeSoundEffect(obj);
 		}
 	}
 
 	private static void FreeMusic()
 	{
-		Music obj = default(Music);
-		foreach ( obj in _Music.Values) {
+		//Music obj = default(Music);
+		foreach (Music obj in _Music.Values) {
 			Audio.FreeMusic(obj);
 		}
 	}
